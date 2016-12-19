@@ -1,0 +1,2 @@
+# Minium
+Databases capstone project
