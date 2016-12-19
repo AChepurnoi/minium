@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Minium</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" href="../static/css/article_list.css" th:href="@{/css/article_list.css}"/>
+
+</head>
+<body>
+
+
+<nav class="navbar navbar-default" th:replace="fragments/navbar :: navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Test</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Feed<span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Top rated</a></li>
+            </ul>
+            <form th:action="@{/search}" method="get" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" name="query" class="form-control" placeholder="Search"/>
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{user/} + ${principal.login}">Profile</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Menu <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{draft/create}">Create Draft</a></li>
+                        <li><a th:href="@{draft/}">List Drafts</a></li>
+                        <li><a th:href="@{article/}">List articles</a></li>
+
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{/login(logout)}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2" th:each="article : ${articles.content}">
+            <div class="article-list-block">
+                <div class="pull-left col-sm-10 article-list-tags"><span
+                        th:text="${article.tags}">tag tag tag tag tag</span></div>
+                <div class="pull-right"><span>By: </span>
+                    <a th:href="@{/user/} + ${article.author}">
+                        <span th:text="${article.author}">Author</span>
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+                <div class="article-list-title"><a th:href="@{/article/} + ${article.id}"><span
+                        class="article-list-title"
+                        th:text="${article.title}">Title</span></a></div>
+                <div class="article-list-short" th:text="${article.short}">Lorem ipsum dolor sit amet, consectetur
+                    adipisicing elit. Cum dicta doloribus ducimus eligendi enim magnam, minima natus, necessitatibus
+                    nisi nobis numquam odit, pariatur quaerat quam quidem quisquam quo repellat voluptas! Lorem ipsum
+                    dolor sit amet, consectetur adipisicing elit. Fuga illum itaque libero! Accusantium architecto,
+                    autem consectetur cumque deserunt eaque excepturi facilis harum hic numquam, omnis placeat porro
+                    reprehenderit tempora voluptas!
+                </div>
+                <div class="hrdivier"></div>
+                <div class="article-list-comments col-sm-6"><span>Comments: </span><span
+                        th:text="${article.comments.size()}">22</span></div>
+                <div class="article-list-likes col-sm-6"><span>Likes: </span><span
+                        th:text="${article.liked.size()}">0</span></div>
+                <div class="article-list-posted col-sm-12"><span>Posted:  </span><span
+                        th:text="${article.posted.toString()}">2016-09-09 21:30:30</span></div>
+                <div class="clearfix"></div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <nav aria-label="Pagination">
+        <ul class="pager">
+            <li>
+                <a id="prev_page" href="#" th:if="${articles.first} == false">
+                    Previous
+                </a>
+            </li>
+            <li>
+                <a id="next_page" href="#" th:if="${articles.last} == false">
+                    Next
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+</div>
+
+
+<script src="../static/js/jquery-3.1.1.js" th:src="@{/js/jquery-3.1.1.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/pagination.js" th:src="@{/js/pagination.js}"></script>
+
+</body>
+</html>

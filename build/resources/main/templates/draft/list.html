@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Minium</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="../../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" href="../../static/css/styles.css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" href="../../static/css/article_list.css" th:href="@{/css/article_list.css}"/>
+
+</head>
+<body>
+
+
+
+<nav class="navbar navbar-default" th:replace="fragments/navbar :: navigation" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Test</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Feed<span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Top rated</a></li>
+            </ul>
+            <form th:action="@{/search}" method="get" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" name="query" class="form-control" placeholder="Search"/>
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{user/} + ${principal.login}">Profile</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Menu <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{draft/create}">Create Draft</a></li>
+                        <li><a th:href="@{draft/}">List Drafts</a></li>
+                        <li><a th:href="@{article/}">List articles</a></li>
+
+                        <li role="separator" class="divider"></li>
+                        <li><a th:href="@{/login(logout)}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 text-center"><h2>My Draft</h2></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6" th:each="draft : ${drafts}">
+            <div class="article-list-block">
+                <div><a th:href="@{/draft/} + ${draft.id}">
+
+                    <span class="article-list-title" th:text="${draft.title}">Title</span></a>
+
+                    <button th:attr="data-id=${draft.id}" type="button"
+                            class="btn btn-default btn-sm btn-danger delete-btn">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div th:utext="${draft.short}">Title article</div>
+                <div class="hrdivier"></div>
+                <span>By: </span><span th:text="${draft.author}">Author</span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<div class="hidden" id="csrf" th:name="${_csrf.parameterName}" th:text="${_csrf.token}"></div>
+
+<script src="../../static/js/jquery-3.1.1.js" th:src="@{/js/jquery-3.1.1.js}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../../static/js/draft/deleteDraft.js" th:src="@{/js/draft/deleteDraft.js}"></script>
+
+
+</body>
+</html>
