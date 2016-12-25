@@ -40,7 +40,7 @@ open class ContentController : AbstractController() {
   fun search(@RequestParam(required = false, defaultValue = "") query: String,
              @RequestParam(required = false, defaultValue = "0") page: Int,
              modelMap: ModelMap): String {
-    if(query.isEmpty())return redirect("feed")
+    if (query.isEmpty()) return redirect("feed")
     val records = if (isTagSearch(query.trim())) articleService.searchTags(query, page) else articleService.searchContent(query, page)
     modelMap.apply {
       addAttribute("page", page)
@@ -56,17 +56,16 @@ open class ContentController : AbstractController() {
     val topUser = statsService.topUsers()
     val topArticles = statsService.topArticles()
     val (usersCount, articleCount) = statsService.getCounters()
+    data class Stats(val usersCount: Long, val articlesCount: Long)
     modelMap.apply {
       addAttribute("users", topUser)
       addAttribute("articles", topArticles)
-      addAttribute("usersCount", usersCount).addAttribute("articleCount", articleCount)
+      addAttribute("stats", Stats(usersCount, articleCount))
     }
     return "stats"
   }
 
 
-
-  
   private fun isTagSearch(query: String): Boolean {
     val tags = query.split(" ").filter { it.first() == '#' }
     return tags.isNotEmpty()

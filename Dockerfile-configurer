@@ -1,0 +1,3 @@
+FROM mongo:3.2
+ADD tuning.js /
+ENTRYPOINT ["/bin/bash"]

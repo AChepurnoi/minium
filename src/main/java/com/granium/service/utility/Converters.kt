@@ -14,6 +14,7 @@ import java.util.*
 
 fun convert(draft: Draft): Article {
   val res = Article().apply {
+    id = draft.id
     title = draft.title
     tags = draft.tags
     short = draft.short

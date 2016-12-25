@@ -1,6 +1,7 @@
 package com.granium.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -30,9 +31,14 @@ public class PostgresDatasourceConfig {
     private String schemaUpdate = "none";
     private String hiberDialect = "org.hibernate.dialect.PostgreSQLDialect";
     private String driver = "org.postgresql.Driver";
-    private String url = "jdbc:postgresql://localhost:5432/coursework";
-    private String user = "postgres";
-    private String pass = "";
+    @Value("${spring.datasource.url:NULL}")
+    private String url;
+
+    @Value("${spring.datasource.username:NULL}")
+    private String user;
+
+    @Value("${spring.datasource.password:NULL}")
+    private String pass;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean psqlEntityManager() {

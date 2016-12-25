@@ -98,9 +98,8 @@
     </div>
 
     <div class="row">
-        <div class="article-list-block"><span>Users count:</span> <span th:value="${usersCount}">100</span></div>
-        <div class="article-list-block"><span>Articles count:</span> <span th:value="${articleCount}">10000</span></div>
-
+        <div class="article-list-block"><span>Users count:</span> <span th:text="${stats.usersCount}">100</span></div>
+        <div class="article-list-block"><span>Articles count:</span> <span th:text="${stats.articlesCount}">10000</span></div>
     </div>
 </div>
 

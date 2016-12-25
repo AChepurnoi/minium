@@ -17,7 +17,7 @@ open class ArticleRepositoryImpl : ArticleRepositoryExtended {
 
   override fun findTopArticles(): List<Article> {
 //    @TODO Find out why this is not working as supposed
-    val query = BasicQuery("{}").with(Sort(Sort.Order(Sort.Direction.ASC, "likes"))).limit(5)
+    val query = BasicQuery("{}").with(Sort(Sort.Order(Sort.Direction.DESC, "likes"))).limit(5)
     return mongoTemplate.find(query,Article::class.java)
   }
 }

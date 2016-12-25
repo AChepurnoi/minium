@@ -45,8 +45,7 @@ open class ArticleServiceImpl : ArticleService {
 
 
   @Caching(evict = arrayOf(
-      CacheEvict(cacheNames = arrayOf("articlesAll", "feed"), allEntries = true),
-      CacheEvict(cacheNames = arrayOf("articles"), key = "#article.id")))
+      CacheEvict(cacheNames = arrayOf("articlesAll", "feed"), allEntries = true)))
   override fun publish(draft: Draft, user: User) {
     val article = convert(draft)
     save(article)
@@ -70,7 +69,7 @@ open class ArticleServiceImpl : ArticleService {
   }
 
   @Caching(evict = arrayOf(
-      CacheEvict(cacheNames = arrayOf("articlesAll", "feed"), allEntries = true),
+      CacheEvict(cacheNames = arrayOf("articlesAll", "feed", "topArticles"), allEntries = true),
       CacheEvict(cacheNames = arrayOf("articles"), key = "#article.id")))
   override fun like(article: Article, user: User) {
     if (article.liked.contains(user.username)) {
